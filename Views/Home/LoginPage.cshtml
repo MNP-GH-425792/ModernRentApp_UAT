@@ -1,0 +1,139 @@
+﻿@{
+    ViewData["Title"] = "MEBS LoginPage";
+    Layout = "~/Views/Shared/Dashboard_layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        /* Full-width input fields */
+        input[type=text], input[type=password] {
+            width: 40%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 20%;
+        }
+
+            button:hover {
+                opacity: 0.8;
+            }
+
+        /* Extra styles for the cancel button */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the image and position the close button */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+            position: relative;
+        }
+
+
+        .lcontainer {
+            padding: 16px;
+        }
+
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+    </style>
+
+</head>>
+
+
+<body>
+    <br></br>
+    <br></br>
+    <div class="lcontainer">
+        <div class="row">
+            <label for="uname"><b>Employee Code</b></label>
+            <input type="text" id="employeecode" name="uname" required>
+
+            <br>
+            <div>
+                <button type="submit" style="width:40%" onclick="loadDashBoard()">Submit</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function loadDashBoard()
+        {
+
+            var baselink = '@ViewData["baseurl"]';
+            var root = '@ViewData["root"]';
+
+            // Define the ecode
+         //   var ecode = '229C5EF7CFF91D45834A89E96AF1C954761D6ACB789835BEA36B62D3D0A8B02ABB734DC4757106DB7F7314CDD1A0FEEA2898370BC2C9B3E63AA18F4D35599B74';
+
+
+            // var ecode = "1E687DD5071221B3FE123145A3D4C22E154F9DE5AA4EF7187DA0A30912B3341292D7A535E8FA1F888337715C019CAAE4962C7A98E5AE03848C276FC2168568E80E3E36E0DE7D05A639DD16E67D67AE00";
+            var ecode = "8448DB133A348AF9805F165AAC8600674A8DF5D6FE23EC04EC82107FF7D1E37646E2DF0F9D44BCCF454025D450AE4E4EB5141D739AC3F60DCFA4AD3204ED9286";
+
+            // var ecode = "64896B27DE2BD23DA4C663DE33360542FE69B45A4AF0B471044FD546D3C7D30AE4835D7211CE7D2D39AD4A0B33C34764E3624C1B1D9025450DA74A5A53CCB1CB690676288DE80344581A9ED465158C42";
+
+            //var token = '36696e3247414f6a7a624577375531484b61546958574468736637384f31657638526b4b4365616263734c72617a70694751756c63444f5652677469547a32714d4f7967497667755166744b4151365242663634774e6e704931542f7a367749704e35537673782b7a30744972636464784b54304e697432794168654955727261705431494d76564f3263524f674566664962415369324e554d7a522f796d4a2f6c535a32412b51526462544a527944617a7962382f464a68547065594535772b387373726c5132384a57464c7968773342722f37523956687445575637635a5a3479704532566471346352335362317551574b654f444f4350622b3732494b6b6e46326676344d414b35566b75416953557a4f4b786a4266425a646846496c6c636c42796e355a52415962376652317a676163634d57327368314e30714857704b7268326a684776516173635a324258374171435479784c63515371684f6b4954306e747748583175556b69446b68692b30617a6f6b42746c7665513334574944394333775756614c582b334f672b4e7462766b2b61626f7a4d6c363143367a57623133424c5168446e4778446530435934616657426a6535364c7566772f52426c64513239757454496d2b32457966724b4f78773d3d';
+           
+            // Create a form element
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/Rent/Index'; // The URL to submit to
+
+            // Create a hidden input for ecode
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'id'; // The name of the parameter
+            input.value = ecode; // The value to send
+
+            // var inputToken = document.createElement('input');
+            // inputToken.type = 'hidden';
+            // inputToken.name = 'token'; // The name of the token parameter
+            // inputToken.value = token;
+
+
+            // Append the input to the form
+            form.appendChild(input);
+            //form.appendChild(inputToken);
+
+
+            // Append the form to the body (it needs to be in the DOM to submit)
+            document.body.appendChild(form);
+
+            // Submit the form
+            form.submit();
+
+        }
+
+
+
+    </script>
+
+
+
+    <script src="~/js/ProjectScript.js"></script>
+</body>
+</html>

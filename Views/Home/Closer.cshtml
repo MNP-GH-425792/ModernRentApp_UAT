@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Closer";
+    Layout = "~/Views/Shared/Closer_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mebs Application</title>
+</head>
+<body> 
+   @*  <script type="text/javascript">
+        window.onload = function()
+        {
+             var url = "@ViewBag.Url";
+             alert(url);
+        }
+      
+    </script> *@
+
+     <script type="text/javascript">
+        window.onload = function()
+        {
+            // URL you want to open in Firefox
+            var url = "@ViewBag.Url";
+
+            // Command to open Firefox with the URL
+            var firefoxCommand = "firefox " + url;
+           openInFirefox(url);
+
+        //  MyObject = ActiveXObject("WScript.Shell")
+
+         //   MyObject.Run(firefoxCommand);
+
+
+
+
+        };
+     </script>
+
+      <script>
+        function openInFirefox(url) {
+           // alert(url);
+          
+           // var firefoxPath = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"; // Path to Firefox executable
+           // window.open(url, '_blank'); // This will open the URL in the default browser
+
+            // Note: The following code won't work due to browser security restrictions
+             var shell = new ActiveXObject("WScript.Shell");
+             shell.Run(firefoxPath + " " + url);
+        }
+    </script>
+
+
+</body>
+</html>

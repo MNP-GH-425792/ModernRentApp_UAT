@@ -1,0 +1,126 @@
+﻿@model RENT_MVC_PROJECT.Models.MenuModel.MenuListModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="~/js/projectScript.js"></script>
+    <script src="~/css/site.js"></script>
+    <script src="~/js/site.js"></script>
+    @RenderSection("scripts", required: false)
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo_item">
+                <i class="bx bx-menu" id="sidebarOpen"></i>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfRDZab3WsjZsEqK6j3ysMXSKrsOStieYemw&usqp=CAU" alt="">
+                <a href="#" style="text-decoration:none"> <h5 style="color:black ; padding:0; margin:0; letter-spacing:1px; font-size:medium; " class="d-sm-none d-md-block d-none d-sm-block">MEBS APPLICATION</h5></a>
+            </div>
+
+            <div class="navbar_content">
+                <i class="bi bi-grid"></i>
+                <a href="#" onclick="loadDashBoard1()"><i class='bx bx-home'></i></a>
+                <i class='bx bx-sun' id="darkLight"></i>
+                <i class='bx bx-bell'></i>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyu6SQca-TBrVXH71O_rfpKsGe1vxUiqLwPQ&usqp=CAU" alt="" class="profile" />
+
+                <a style="color:black; font-size:12px;">@httpContextAccessor.HttpContext.Session.GetString("EmpName")</a> <label style="color:dimgrey">|</label> <a style="color:black; font-size:12px;">@httpContextAccessor.HttpContext.Session.GetString("BrName")</a>
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"></a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a onclick="loadChangePW()" class="dropdown-item" style="cursor:pointer;">Change Password <i class='bx bxs-lock-open'></i></a>
+                    <div class="dropdown-divider"></div>
+                    <a onclick="logout()" class="dropdown-item" style="cursor:pointer;">Logout <i class='bx bx-log-out'></i></a>
+                    @* <i class="bx bx-chevron-down" id="profileicon"></i> *@
+                </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        @* <main role="main" class="pb-3">*@
+        @RenderBody()
+        @*  </main>*@
+    </div>
+
+    @*  <footer class="border-top footer text-muted">
+    <div class="container">
+    &copy; 2024 - OTHERS_MVC_Project - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+    </footer> *@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+
+        function loadDashBoard1() {
+
+            var _link = '';
+
+
+            if (document.location.hostname == 'localhost') {
+                _link = "/Home/Dashboard?session=";
+            }
+            else {
+                var root = '@ViewData["root"]'; _link = "/" + root + "/Home/Dashboard?session=";
+            }
+
+            window.location.href = _link;
+        }
+
+        function loadChangePW() {
+
+
+
+            var baselink = '@ViewData["baseurl"]';
+
+            document.location.href = baselink + "MaaPortal/changePassword";
+        }
+
+
+        function loadloginPage() {
+            //  alert("closing..");
+
+            var myWindow
+            window.open('', '_self', ''); window.close();
+            // window.close();
+
+            // var baselink = '@ViewData["baseurl"]';
+
+            // var domainurl = baselink + "MebsApp";
+
+            // document.location.href = domainurl;
+        }
+
+        function logout() {
+
+
+            if (document.location.hostname == 'localhost') {
+                window.location.href = "/home/Logout";
+            }
+            else {
+                root = '@ViewData["root"]';
+                domainurl = baselink + root;
+                window.location.href = domainurl + "/Home/Logout";
+            }
+        }
+    </script>
+
+
+
+    <footer class="border-top footer text-muted">
+        <div style="color:black; background-color:rgb(255,204,0); width:100%;font-size:10px;">
+            &copy; 2024 - Designed & Developed by Team Modernization, IT S/W Manappuram <label style="color:dimgrey">|</label> <a href="https://www.manappuram.com" target="_blank" style="text-decoration:none; color:black; text-align:right; ">www.manappuram.com  </a>
+        </div>
+    </footer>
+</body>
+</html>

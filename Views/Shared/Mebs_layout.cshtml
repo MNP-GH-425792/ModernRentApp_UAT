@@ -1,0 +1,81 @@
+﻿@model RENT_MVC_PROJECT.Models.MenuModel.MenuListModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor httpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MEBS APPLICATION</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Megadrop.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css">
+    <script src="~/js/projectscript.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo_item">
+                <i class="bx bx-menu" id="sidebarOpen"></i>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfRDZab3WsjZsEqK6j3ysMXSKrsOStieYemw&usqp=CAU" alt="">
+                <a href="#" style="text-decoration:none"> <h5 style="color:black ; padding:0; margin:0; letter-spacing:1px; font-size:medium; " class="d-sm-none d-md-block d-none d-sm-block">MEBS APPLICATION</h5></a><label style="color:gray; font-size:100%;">|</label><h5 style="color:red; font-size:medium; padding:0; margin:0; letter-spacing:2px;">@httpContextAccessor.HttpContext.Session.GetString("headname")</h5>
+            </div>
+            <div class="navbar_content">
+                <div onclick="loadDashBoard1()"> <a><i class='bx bx-home'></i></a></div>
+                <i class='bx bx-sun' id="darkLight"></i>
+                <i class='bx bx-bell'></i>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyu6SQca-TBrVXH71O_rfpKsGe1vxUiqLwPQ&usqp=CAU" alt="" class="profile" onclick="loadDashBoard1()" />
+                <a style="color:black; font-size:12px;">@httpContextAccessor.HttpContext.Session.GetString("EmpName")</a> <label style="color:dimgrey">|</label> <a style="color:black; font-size:12px;">@httpContextAccessor.HttpContext.Session.GetString("BrName")</a>
+
+                <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown"></a>
+                <div class="dropdown-menu dropdown-menu-end">
+                    <a onclick="loadChangePW()" class="dropdown-item" style="cursor:pointer;"> Change Password <i class='bx bxs-lock-open'></i></a>
+                    <div class="dropdown-divider"></div>
+                    <div onclick="logout();"><a href="#" class="dropdown-item">Logout <i class='bx bx-log-out'></i></a></div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <nav class="sidebar" style="height:100%">
+        <div class="menu_content">
+            <ul class="menu_items">
+                <!-- duplicate or remove this li tag if you want to add or remove navlink with submenu -->
+                <!-- start -->
+                @foreach (var item in Model.M_NAME)
+                {
+                    <li class="item">
+                        <div href="#" id=@Html.DisplayFor(modelItem => item.MENU_ID) class="nav_link" onclick="render(id);">
+                            <span class="navlink_icon">
+                                <i class='bx bx-grid-horizontal'></i>
+                            </span>
+                            <span class="navlink">@Html.DisplayFor(modelItem => item.MENU_NAME)</span>
+                            <i class="bx bx-chevron-right arrow-left"></i>
+                        </div>
+                    </li>
+                }
+                <!-- end -->
+            </ul>
+            <!-- Sidebar Open / Close -->
+            @*  <div class="bottom_content">
+            <div class="bottom expand_sidebar">
+            <span style="font-size:12px"> Expand</span>
+            <i class='bx bx-log-in'></i>
+            </div>
+            <div class="bottom collapse_sidebar">
+            <span style="font-size:12px"> Collapse</span>
+            <i class='bx bx-log-out'></i>
+            </div>
+            </div>*@
+        </div>
+    </nav>
+    <div>
+      
+    </div>
+</body>
+</html>

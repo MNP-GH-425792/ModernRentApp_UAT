@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Logout";
+    Layout = "~/Views/Shared/Dashboard_layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title> MEBS Dashboard</title>
+    <link rel="stylesheet" href="~/css/site.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    
+    <script type="text/javascript">
+
+        window.onload = function exampleFunction() {
+
+            window.history.forward();
+        }
+            
+
+       DisableBackButton();
+window.onload = DisableBackButton;
+window.onpageshow = function(evt) { if (evt.persisted) DisableBackButton() }
+window.onload = function() {void(0)}
+
+    </script>
+</body>>
+    </html>
+

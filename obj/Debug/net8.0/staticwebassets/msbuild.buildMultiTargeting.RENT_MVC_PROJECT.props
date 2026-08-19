@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\RENT_MVC_PROJECT.props" />
+</Project>

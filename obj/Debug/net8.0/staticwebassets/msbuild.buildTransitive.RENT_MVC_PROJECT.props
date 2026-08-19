@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\RENT_MVC_PROJECT.props" />
+</Project>

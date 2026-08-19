@@ -1,0 +1,190 @@
+﻿@model RENT_MVC_PROJECT.Models.MenuModel.MenuListModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/Dashboard_layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title> MEBS Dashboard</title>
+    <link rel="stylesheet" href="~/css/site.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="color:black">
+    <link rel="text/javascript" href="~/css/site.js">
+    <section class="home-section">
+
+        <div class="home-content">
+            <div class="overview-boxes">
+                <div class="box" id="OTHERS" onclick="MenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Others</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-cart-alt cart'></i>
+                    @*<i class='bx bx-coin-stack cart'></i>*@
+                </div>
+                <div class="box" id="NCD/Bond" onclick="ErrorMenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">NCD/Bond</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-wallet-alt cart two'></i>
+                </div>
+                <div class="box" id="Accounts" onclick="MenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Accounts</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-credit-card cart three'></i>
+                </div>
+                <div class="box" id="FeeBased" onclick="ErrorMenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Fee Based</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-money cart four'></i>
+                </div>
+            </div>
+
+            <div class="sales-boxes">
+            </div>
+        </div>
+
+
+        <div class="home-content">
+            <div class="overview-boxes">
+                <div class="box" id="HRM" onclick="MenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">HRM</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bxs-user cart two'></i>
+                    @*  <i class='bx bx-cart-alt cart'></i>*@
+                </div>
+                <div class="box" id="Legal" onclick="ErrorMenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Legal</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-dollar-circle cart two'></i>
+                </div>
+                <div class="box" id="OTHERS" onclick="MenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Others/Operations</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-cart cart three'></i>
+                </div>
+                <div class="box" id="Compliance" onclick="MenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Compliance</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bxs-cart-download cart four'></i>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="home-content">
+            <div class="overview-boxes">
+                <div class="box" id="AML" onclick="MenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">AML</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-phone-call cart'></i>
+                </div>
+                <div class="box" id="CALLCENTRE" onclick="ErrorMenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">CALL CENTRE</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-phone-call cart'></i>
+                </div>
+                <div class="box" id="Manage" onclick="ErrorMenuPageLoader(id)" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Manage</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bxs-user cart two'></i>
+                </div>
+
+                <div class="box" id="Audit" onclick="PostDataAPICall(12);MenuPageLoader(id);" style="cursor:pointer;">
+                    <div class="right-side">
+                        <div class="box-topic">Audit</div>
+                        <div class="indicator">
+                            <i class='bx bxs-right-arrow-alt'></i>
+                            <span class="text">Click Here To View</span>
+                        </div>
+                    </div>
+                    <i class='bx bx-list-check cart three'></i>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </section>
+
+    <script>
+
+   
+        function updateDateTime() {
+
+            var now = new Date();
+            var date = now.toDateString();
+            //var time = now.toLocaleTimeString();
+            //document.getElementById('date').textContent = date;
+            //document.getElementById('time').textContent = time;
+
+        }
+        // Update date and time every second
+        setInterval(updateDateTime, 1000);
+        // Initial call to display date and time
+        updateDateTime()
+    </script>
+    <script src="~/js/projectscript.js"></script>
+</body>
+</html>

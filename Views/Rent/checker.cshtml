@@ -1,0 +1,365 @@
+﻿@{
+    ViewData["Title"] = "CommonReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor httpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    @*<meta http-equiv="refresh" content="8" />*@
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="~/css/closed_rpt1.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/index.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+
+
+    <!-- Run automatically when the page loads -->
+    <script src="https://jquery.com"></script>
+
+
+
+    <style>
+        /* A clean, universally supported modern linear indicator */
+        /* Clean, modern progress line that scales nicely */
+        .simple-loader {
+            width: 60px;
+            height: 4px;
+            background-color: #007bff;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        /* Optional spacing rules for alignment safety */
+        .loading-dots {
+            display: inline-block;
+            letter-spacing: 2px;
+        }
+
+
+
+        /* Ensure auto-height textareas wrap text cleanly and hide native scrollbars */
+        .auto-height-textarea {
+            overflow-y: hidden; /* Removes secondary vertical scrollbars */
+            resize: none; /* Disables manual layout breaking stretching */
+            box-sizing: border-box;
+        }
+
+        /* Increase the height and look of the 3 specified textarea rows */
+        .full-width-row textarea.form-control-field {
+            min-height: 100px; /* Forces a distinct, taller height */
+            max-height: 200px; /* Prevents it from getting too long */
+            overflow-y: auto; /* Adds a clean scrollbar for long data text strings */
+            line-height: 1.5; /* Makes reading the lists of roles much easier */
+        }
+
+
+            /* Specific styling for the read-only textareas inside those rows */
+            .full-width-row textarea.form-control-field {
+                resize: none; /* Disables manual dragging resizing */
+                width: 100%; /* Locks to row boundaries */
+            }
+
+
+        /* Ensure the form container uses flexbox layout */
+        #dynamic-fields-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Standard fields can sit side-by-side */
+        .field-group {
+            flex: 1 1 calc(50% - 15px); /* Adjust percentage as needed for columns */
+            display: flex;
+            flex-direction: column;
+        }
+
+            /* Force targeted fields to occupy a single standalone row */
+            .field-group.full-width-row {
+                flex: 1 1 100% !important;
+                width: 100%;
+            }
+
+
+        .dynamic-allocation-card {
+            background: #ffffff;
+            border: 1px solid #dcdfe6;
+            border-radius: 6px;
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.05);
+            margin: 15px 0;
+            padding: 20px;
+        }
+
+        .allocation-header h4 {
+            margin: 0 0 4px 0;
+            color: #303133;
+            font-size: 16px;
+        }
+
+        .allocation-header p {
+            margin: 0 0 20px 0;
+            font-size: 13px;
+            color: #909399;
+        }
+
+        /* Auto-balancing CSS Grid layout for infinite elements */
+        .allocation-grid-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px 24px;
+        }
+
+        /* Individual field container blocks */
+        .field-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .field-group label {
+                font-size: 12px;
+                font-weight: 600;
+                color: #606266;
+                margin-bottom: 6px;
+                letter-spacing: 0.5px;
+            }
+
+        .form-control-field {
+            background-color: #fff;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            color: #606266;
+            height: 36px;
+            padding: 0 15px;
+            font-size: 14px;
+            transition: border-color 0.2s cubic-bezier(.645,.045,.355,1);
+        }
+
+            .form-control-field:focus {
+                outline: none;
+                border-color: #409eff;
+            }
+
+        /* Specific styling modifier for Read-only Audit trails */
+        .field-audit .form-control-field {
+            background-color: #f5f7fa;
+            border-color: #e4e7ed;
+            color: black;
+            cursor: not-allowed;
+        }
+
+        .field-audit label {
+            color: #909399;
+        }
+
+        /* Dynamic State Messages */
+        .allocation-placeholder {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #909399;
+            padding: 30px 0;
+            font-style: italic;
+        }
+
+        .alert-info {
+            grid-column: 1 / -1;
+            background-color: #f4f4f5;
+            color: #909399;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+
+/*          --------------------------------------------------------------
+ */        /* --- Add/Update these CSS classes inside your <style> tag --- */
+        .filter-group1 {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        /* Flexbox wrapper to force dropdown and action buttons onto a single horizontal row */
+        .dropdown-row-container {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .filter-group1 select {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            background-color: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            flex-grow: 1; /* Dropdown stretches automatically to take up remaining row room */
+            box-sizing: border-box;
+        }
+
+        /* Action Button Resets and Styles */
+        .btn-action {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            height: 37px;
+            box-sizing: border-box;
+        }
+
+        .btn-edit {
+            background-color: #0076d6;
+            color: #ffffff;
+        }
+
+            .btn-edit:hover {
+                background-color: #00569d;
+            }
+
+        .btn-cancel {
+            background-color: #e0e0e0;
+            color: #333333;
+            width: 200px;
+        }
+
+            .btn-cancel:hover {
+                background-color: #c8c8c8;
+            }
+
+        .pagecontiner {
+            display: flex;
+            justify-content: center;
+            margin-left: 16px;
+            background-color: midnightblue;
+            margin-top: 20px;
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 12px;
+        }
+
+        #pdfconversion {
+            width: 610mm;
+            background: #fff;
+            padding: 5mm;
+            box-sizing: border-box;
+            border: 4px solid midnightblue;
+            background-color: whitesmoke;
+        }
+
+        .filter-container1 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 20px;
+            width: 1000px;
+        }
+
+        .filter-group1 {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+            .filter-group1 label {
+                font-size: 13px;
+                font-weight: 600;
+                color: #4a4a4a;
+            }
+
+            .filter-group1 select {
+                padding: 8px 12px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                font-size: 14px;
+                background-color: #fff;
+                outline: none;
+                transition: border-color 0.2s;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+                .filter-group1 select:focus {
+                    border-color: #0076d6;
+                }
+    </style>
+</head>
+<body>
+    <script>var rootValue = '@ViewData["root"]';</script>
+
+    <script src="~/js/checker.js"></script>
+    <div class="pagecontiner" id="Content2">
+        <div id="pdfconversion">
+            <!-- Cascading Filter Section -->
+            <!-- --- Replace the entire contents of <div class="filter-container1"> //////////////with this --- -->
+            <div class="filter-container1">
+
+                <!-- Main Menu Row -->
+                <div class="filter-group1" id="group-main-menu">
+                    <label for="ddl-main-menu">Main Menu</label>
+                    <div class="dropdown-row-container">
+                        <select id="ddl-main-menu" onchange="loadData()">
+                            <option value="">-- Select Main Menu --</option>
+                        </select>
+                       
+                    </div>
+                </div>
+
+                <div class="dynamic-allocation-card" id="datas">
+                     @* <div class="allocation-header">
+                         <h4><i class="icon-sliders"></i> System Data Profile Form</h4>
+                         <p>Allocating fields dynamically based on runtime database execution schema metadata.</p>
+                     </div> *@
+
+                    <!-- This element self-assembles and groups inputs programmatically via JS -->
+                    <form id="dynamic-fields-form" class="allocation-grid-form" onsubmit="return false;">
+                        <div class="allocation-placeholder">
+                            <p>Awaiting valid metadata context to generate input profiles...</p>
+                        </div>
+                    </form>
+                </div>
+
+
+                <div id="txt-remark1" style="display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px;">
+                    <label for="txt-remark" style="font-size: 12px; font-weight: bold; color: #333;">Remark:</label>
+                    <input type="text" id="txt-remark" maxlength="70" oninput="validateRemark(this)" placeholder="Letters and single spaces only" style="padding: 6px; border: 1px solid #ccc; border-radius: 4px; width: 100%; max-width: 1000px; box-sizing: border-box;">
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #eee; padding-top: 15px;">
+                    <!-- Cancel Button -->
+                    <button type="button" id="btn2" onclick="CancelFields()" style="padding: 7px 15px; border: 1px solid #ccc; background-color: #f5f5f5; color: #333; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;" onmouseover="this.style.backgroundColor='#e0e0e0'" onmouseout="this.style.backgroundColor='#f5f5f5'">
+                        Reject
+                    </button>
+                    <button type="button" id="btn1" onclick="Confirm()" style="padding: 7px 15px; border: 1px solid #0076d6; background-color: #0076d6; color: #fff; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;" onmouseover="this.style.backgroundColor='#005a9e'" onmouseout="this.style.backgroundColor='#0076d6'">
+                        Confirm
+                    </button>
+                </div>
+
+
+                <!-- Middle Row: Remark Text Box -->
+                
+            </div>
+
+
+        </div>
+    </div>
+
+    <input type="hidden" id="LUserName" value="@ViewData["EmpName"]" />
+    <input type="hidden" id="LUserId" value="@ViewData["EmpCode"]" />
+    <input type="hidden" id="LBranchId" value="@ViewData["BrID"]" />
+    <input type="hidden" id="Module_id" value="@ViewData["Module_id"]" />
+</body>
+
+</html>

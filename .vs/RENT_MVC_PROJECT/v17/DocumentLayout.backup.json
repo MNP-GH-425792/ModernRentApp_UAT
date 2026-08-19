@@ -1,0 +1,157 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\views\\rent\\checker.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:views\\rent\\checker.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\controllers\\rentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:controllers\\rentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\repository\\getdatarepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:repository\\getdatarepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\wwwroot\\js\\checker.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:wwwroot\\js\\checker.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\views\\rent\\rentcustomerpanupdate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:views\\rent\\rentcustomerpanupdate.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|c:\\users\\425792\\desktop\\rent_mvc_project\\rent_mvc_project\\wwwroot\\js\\rentcustomerpanupdate.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1E9BD30E-6FAD-42D2-940D-4809329E49C6}|RENT_MVC_PROJECT.csproj|solutionrelative:wwwroot\\js\\rentcustomerpanupdate.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "rentcustomerpanupdate.cshtml",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Views\\Rent\\rentcustomerpanupdate.cshtml",
+              "RelativeDocumentMoniker": "Views\\Rent\\rentcustomerpanupdate.cshtml",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Views\\Rent\\rentcustomerpanupdate.cshtml",
+              "RelativeToolTip": "Views\\Rent\\rentcustomerpanupdate.cshtml",
+              "ViewState": "AgIAAJwAAAAAAAAAAAAAALAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-17T05:50:06.928Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T11:27:31.136Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "checker.js",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\wwwroot\\js\\checker.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\checker.js",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\wwwroot\\js\\checker.js",
+              "RelativeToolTip": "wwwroot\\js\\checker.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-08-18T11:14:59.734Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "checker.cshtml",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Views\\Rent\\checker.cshtml",
+              "RelativeDocumentMoniker": "Views\\Rent\\checker.cshtml",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Views\\Rent\\checker.cshtml",
+              "RelativeToolTip": "Views\\Rent\\checker.cshtml",
+              "ViewState": "AgIAAE4BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-18T11:14:43.481Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-08-17T11:24:11.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "rentcustomerpanupdate.js",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\wwwroot\\js\\rentcustomerpanupdate.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\rentcustomerpanupdate.js",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\wwwroot\\js\\rentcustomerpanupdate.js",
+              "RelativeToolTip": "wwwroot\\js\\rentcustomerpanupdate.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC0AAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-08-17T10:40:43.471Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "GetDataRepo.cs",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Repository\\GetDataRepo.cs",
+              "RelativeDocumentMoniker": "Repository\\GetDataRepo.cs",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Repository\\GetDataRepo.cs",
+              "RelativeToolTip": "Repository\\GetDataRepo.cs",
+              "ViewState": "AgIAAHYBAAAAAAAAAAAewHoAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T10:33:07.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RentController.cs",
+              "DocumentMoniker": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Controllers\\RentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\RentController.cs",
+              "ToolTip": "C:\\Users\\425792\\Desktop\\RENT_MVC_PROJECT\\RENT_MVC_PROJECT\\Controllers\\RentController.cs",
+              "RelativeToolTip": "Controllers\\RentController.cs",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAewO0AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-17T05:43:54.111Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
