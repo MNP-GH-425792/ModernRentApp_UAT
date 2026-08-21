@@ -321,6 +321,52 @@ namespace RENT_MVC_PROJECT.Controllers
             return View(model);
 
         }
+        public IActionResult Agreestatus_Report(string datas)
+        {
+
+            ViewData["baseurl"] = baseurl;
+            ViewData["root"] = rootfolder;
+            ViewData["HeadName"] = datas;
+
+            ViewData["user"] = HttpContext.Session.GetString("ecode");
+            var empcode = HttpContext.Session.GetString("ecode");
+            var empname = HttpContext.Session.GetString("EmpName");
+            var branchname = HttpContext.Session.GetString("BrName");
+            var UserId = HttpContext.Session.GetString("UserId");
+            var brID = HttpContext.Session.GetString("BrID");
+
+            ViewData["BrID"] = brID;
+            MenuListModel model = new MenuListModel();
+            model = (MenuListModel)_Grepo.GetMainMenuData(UserId, baseurl, MainHeadID);
+
+            ViewData["EmpCode"] = UserId;
+            ViewData["EmpName"] = empname;
+            return View(model);
+
+        }
+        public IActionResult Agreestatus_Report1(string datas)
+        {
+
+            ViewData["baseurl"] = baseurl;
+            ViewData["root"] = rootfolder;
+            ViewData["HeadName"] = datas;
+
+            ViewData["user"] = HttpContext.Session.GetString("ecode");
+            var empcode = HttpContext.Session.GetString("ecode");
+            var empname = HttpContext.Session.GetString("EmpName");
+            var branchname = HttpContext.Session.GetString("BrName");
+            var UserId = HttpContext.Session.GetString("UserId");
+            var brID = HttpContext.Session.GetString("BrID");
+
+            ViewData["BrID"] = brID;
+            MenuListModel model = new MenuListModel();
+            model = (MenuListModel)_Grepo.GetMainMenuData(UserId, baseurl, MainHeadID);
+
+            ViewData["EmpCode"] = UserId;
+            ViewData["EmpName"] = empname;
+            return View(model);
+
+        }
     }
 
 }
