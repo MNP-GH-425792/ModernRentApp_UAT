@@ -179,7 +179,7 @@
 
                 <div class="field-group">
                     <label>Select Branch</label>
-                    <select id="ddlBranch" class="form-control"></select>
+                    <select id="ddlBranch" class="form-control" onchange="loadBuilding()"></select>
                 </div>
 
             </div>
@@ -188,12 +188,12 @@
 
                 <div class="field-group">
                     <label>Select Building</label>
-                    <select id="ddlBuilding" class="form-control"></select>
+                    <select id="ddlBuilding" class="form-control" onchange="loadCustomer()"></select>
                 </div>
 
                 <div class="field-group">
                     <label>Select Customer</label>
-                    <select id="ddlCustomer" class="form-control"></select>
+                    <select id="ddlCustomer" class="form-control" onchange="loadDetails()"></select>
                 </div>
 
             </div>
@@ -216,24 +216,29 @@
 
                 <div class="field-group">
                     <label>PAN Number</label>
-                    <input type="text" id="txtPanNumber" class="form-control" maxlength="10" />
+                    <input type="text" id="txtPanNumber" class="form-control" maxlength="20" />
                 </div>
 
             </div>
 
             <div class="button-section">
-                <button id="btnConfirm" type="button" class="btn-confirm">
-                    <i class='bx bx-check-circle'></i>
+                <button id="btnConfirm" type="button" class="btn-confirm" onclick="confirm()">
+                    <i class='bx bx-check-circle' ></i>
                     Confirm
                 </button>
 
-                <button id="btnExit" type="button" class="btn-exit">
-                    <i class='bx bx-x-circle'></i>
+                <button id="btnExit" type="button" class="btn-exit" onclick="exit()">
+                    <i class='bx bx-x-circle' ></i>
                     Exit
                 </button>
             </div>
 
         </div>
 </div>
+    <input type="hidden" id="LUserName" value="@ViewData["EmpName"]" />
+
+    <input type="hidden" id="LUserId" value="@ViewData["EmpCode"]" />
+   <input type="hidden" id="LBranchId" value="@ViewData["BrID"]" /> 
+    
 </body>
 </html>
