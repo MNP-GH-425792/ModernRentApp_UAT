@@ -1,0 +1,784 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+        <link rel="stylesheet" href="~/css/index.css">
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/tiff.js@1.0.0/tiff.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/utif@latest/UTIF.js"></script>
+        <script src="https://unpkg.com/utif@latest/UTIF.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/tiff@0.16.0/dist/tiff.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+            @*<script src="~/js/Agreestatus_Report1.js"></script>*@
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+
+
+
+    <script>var root = '@ViewData["root"]';</script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 15px;
+            background: #f5f7fa;
+        }
+
+        .header {
+            text-align: center;
+            font-weight: bold;
+        }
+
+            .header h3 {
+                margin: 0;
+                color: #003366;
+                font-size: 26px;
+            }
+
+            .header div {
+                margin-top: 5px;
+                color: #444;
+                font-size: 13px;
+            }
+
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .report-title {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            border-radius: 4px;
+        }
+
+        .btn-area {
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .exit-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            margin-left: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .excel-btn {
+            background: #198754;
+            color: white;
+            border: none;
+            padding: 8px 22px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .exit-btn:hover {
+            background: #bb2d3b;
+        }
+
+        .excel-btn:hover {
+            background: #157347;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead th {
+            background: #d9e2f3;
+            color: darkred;
+            border: 1px solid #cfd8e6;
+            padding: 7px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 6px;
+            font-size: 13px;
+        }
+
+        tbody tr:nth-child(even) {
+            background: #edf3fa;
+        }
+
+        tbody tr:nth-child(odd) {
+            background: #f8f8f8;
+        }
+
+        tbody tr:hover {
+            background: #fff3cd;
+        }
+
+        .total-row {
+            background: #eef5fb !important;
+            color: darkred;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h3>MANAPPURAM FINANCE LIMITED</h3>
+
+        <div>
+            Branch Id :
+            <span id="spBranchId"></span>
+
+            &nbsp;&nbsp;
+
+            Branch Name :
+            <span id="spBranchName"></span>
+        </div>
+    </div>
+
+    <div class="top-row">
+        <span>
+            Date :
+            <span id="spDate"></span>
+        </span>
+
+        <span>
+            Time :
+            <span id="spTime"></span>
+        </span>
+    </div>
+
+    <div class="report-title">
+        <span id="spReportHeading"></span>
+    </div>
+
+    <div class="btn-area">
+        <button type="button" class="excel-btn" onclick="ExportToExcel()">
+            Export Excel
+        </button>
+
+        <button type="button" class="exit-btn" onclick="Exit1()">
+            Exit
+        </button>
+    </div>
+
+    <table id="tblAgreementReport" class="table table-bordered table-striped">
+    </table>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var reportData = JSON.parse(
+                sessionStorage.getItem("AgreementReportData") || "[]"
+            );
+
+            var statusText =
+                sessionStorage.getItem("AgreementStatus") || "";
+
+            var categoryText =
+                sessionStorage.getItem("AgreementCategory") || "";
+
+            var branchId =
+                sessionStorage.getItem("AgreementBranchId") || "";
+
+            var branchName =
+                sessionStorage.getItem("AgreementBranchName") || "";
+
+            $("#spBranchId").text(branchId);
+            $("#spBranchName").text(branchName);
+
+            var now = new Date();
+
+            $("#spDate").text(
+                now.toLocaleDateString("en-GB")
+            );
+
+            $("#spTime").text(
+                now.toLocaleTimeString()
+            );
+
+            $("#spReportHeading").text(
+                "RENT STATUS REPORT - " +
+                statusText.toUpperCase() +
+                " (" +
+                categoryText.toUpperCase() +
+                ")"
+            );
+
+            if (!reportData || reportData.length === 0) {
+
+                $("#tblAgreementReport").html(
+                    "<tr><td style='text-align:center'>No Data Found</td></tr>"
+                );
+
+                return;
+            }
+
+            bindAgreementTable(reportData);
+
+        });
+
+        //function bindAgreementTable(data) {
+
+        //    if (!data || data.length == 0) {
+        //        $("#tblAgreementReport").html("");
+        //        return;
+        //    }
+
+        //    var categoryId = sessionStorage.getItem("AgreementCategoryId");
+        //    var statusId = sessionStorage.getItem("AgreementStatusId");
+        //    var html = "<thead><tr>";
+
+        //    if (categoryId == "1") {
+
+        //        html += "<th>BRANCH</th>";
+        //        html += "<th>CUSTOMER_ID</th>";
+        //    }
+        //    else if (categoryId == "11") {
+
+        //        html += "<th>OFFICE-SPACE</th>";
+        //        html += "<th>ENTER_DATE</th>";
+        //    }
+        //    else {
+
+        //        html += "<th>FLAT-NAME</th>";
+
+        //        if (statusId == "4")
+        //            html += "<th>ENTER_DATE</th>";
+        //        else if (statusId == "6")
+        //            html += "<th>AREA</th>";
+        //        else
+        //            html += "<th>ACC_APPROVE_DT</th>";
+        //    }
+
+        //    html += "<th>OWNER</th>";
+        //    html += "<th>SECURITY DEP.</th>";
+        //    html += "<th>TOT_RENT</th>";
+        //    html += "<th>PERIOD</th>";
+
+        //    if (categoryId == "1")
+        //        html += "<th>SQUARE FEET</th>";
+        //    else
+        //        html += "<th>CAPACITY</th>";
+
+        //    if (statusId == "6") {
+
+        //        html += "<th>ADVANCE TAKEN DATE</th>";
+        //        html += "<th>PENDING DAYS</th>";
+        //    }
+        //    else if (statusId == "5") {
+
+        //        html += "<th></th>";
+        //        html += "<th>PENDING DAYS</th>";
+        //    }
+        //    else {
+
+        //        html += "<th></th>";
+        //        html += "<th></th>";
+        //    }
+
+        //    html += "</tr></thead><tbody>";
+
+        //    var totalCount = 0;
+        //    var totalSecurityDeposit = 0;
+        //    var totalRent = 0;
+
+        //    $.each(data, function (i, item) {
+
+        //        html += "<tr>";
+
+        //        if (categoryId == "1") {
+
+        //            html += "<td>" + (item.BRANCH_OFFICE_SPACE || "") + "</td>";
+        //            html += "<td>" + (item.CUSTOMER_ID || "") + "</td>";
+        //        }
+        //        else if (categoryId == "11") {
+
+        //            html += "<td>" + (item.BRANCH_OFFICE_SPACE || "") + "</td>";
+
+        //            if (item.ENTERED_DATE == null || item.ENTERED_DATE == "")
+        //                html += "<td>NOT ENTERED</td>";
+        //            else
+        //                html += "<td>" + item.ENTERED_DATE + "</td>";
+        //        }
+        //        else {
+
+        //            html += "<td>" + (item.FLAT_NAME || "") + "</td>";
+
+        //            if (statusId == "4") {
+
+        //                if (item.ENTER_DATE == null || item.ENTER_DATE == "")
+        //                    html += "<td>NOT ENTERED</td>";
+        //                else
+        //                    html += "<td>" + item.ENTER_DATE + "</td>";
+        //            }
+        //            else if (statusId == "6") {
+
+        //                html += "<td>" + (item.AREA || "") + "</td>";
+        //            }
+        //            else {
+
+        //                if (item.ACC_APPROVE_DT == null || item.ACC_APPROVE_DT == "")
+        //                    html += "<td>NOT ENTERED</td>";
+        //                else
+        //                    html += "<td>" + item.ACC_APPROVE_DT + "</td>";
+        //            }
+        //        }
+
+        //        html += "<td>" + (item.OWNER_NAME || "") + "</td>";
+
+        //        html += "<td style='text-align:right'>" +
+        //            (item.SECURITY_DEPOSIT || 0) +
+        //            "</td>";
+
+        //        html += "<td style='text-align:right'>" +
+        //            (item.TOTAL_RENT || 0) +
+        //            "</td>";
+
+        //        html += "<td>" + (item.RENT_PERIOD || "") + "</td>";
+
+        //        if (categoryId == "1")
+        //            html += "<td>" + (item.SQFEET_CAPACITY || "") + "</td>";
+        //        else
+        //            html += "<td>" + (item.CAPACITY || item.SQFEET_CAPACITY || "") + "</td>";
+
+        //        if (statusId == "6") {
+
+        //            html += "<td>" + (item.ADVANCE_TAKEN_DATE || "") + "</td>";
+        //            html += "<td>" + (item.PENDING_DAYS || "") + "</td>";
+        //        }
+        //        else if (statusId == "5") {
+
+        //            html += "<td></td>";
+        //            html += "<td>" + (item.PENDING_DAYS || "") + "</td>";
+        //        }
+        //        else {
+
+        //            html += "<td></td>";
+        //            html += "<td></td>";
+        //        }
+        //        totalCount++;
+
+        //        totalSecurityDeposit += Number(item.SECURITY_DEPOSIT || 0);
+
+        //        totalRent += Number(item.TOTAL_RENT || 0);
+
+
+        //        html += "</tr>";
+
+        //    });
+
+
+        //    html += "</tbody>";
+
+        //    //var summaryData = JSON.parse(
+        //    //    sessionStorage.getItem("AgreementSummaryData") || "[]"
+        //    //);
+
+        //    //if (summaryData.length > 0) {
+
+        //    //    html += "<tr style='background:#eef5fb;color:#8B0000;font-weight:bold;'>";
+
+        //    //    html += "<td>TOTAL :</td>";
+
+        //    //    html += "<td>" +
+        //    //        (summaryData[0].TOTAL_COUNT || 0) +
+        //    //        "</td>";
+
+        //    //    html += "<td></td>";
+
+        //    //    html += "<td style='text-align:right'>" +
+        //    //        Number(summaryData[0].TOTAL_SECURITY_DEPOSIT || 0)
+        //    //            .toLocaleString('en-IN', {
+        //    //                minimumFractionDigits: 2,
+        //    //                maximumFractionDigits: 2
+        //    //            }) +
+        //    //        "</td>";
+
+        //    //    html += "<td style='text-align:right'>" +
+        //    //        Number(summaryData[0].TOTAL_RENT || 0)
+        //    //            .toLocaleString('en-IN', {
+        //    //                minimumFractionDigits: 2,
+        //    //                maximumFractionDigits: 2
+        //    //            }) +
+        //    //        "</td>";
+
+        //    //    html += "<td></td>";
+        //    //    html += "<td></td>";
+
+        //    //    if (statusId == "6" || statusId == "5") {
+        //    //        html += "<td></td>";
+        //    //        html += "<td></td>";
+        //    //    }
+
+        //    //    html += "</tr>";
+        //    //}
+
+        //    //$("#tblAgreementReport").html(html);
+        //});
+        //    html += "<tr class='total-row'>";
+
+        //    html += "<td><b>TOTAL :</b></td>";
+
+        //    html += "<td><b>" + totalCount + "</b></td>";
+
+        //    html += "<td></td>";
+
+        //    html += "<td style='text-align:right'><b>" +
+        //        totalSecurityDeposit.toLocaleString('en-IN', {
+        //            minimumFractionDigits: 2,
+        //            maximumFractionDigits: 2
+        //        }) +
+        //        "</b></td>";
+
+        //    html += "<td style='text-align:right'><b>" +
+        //        totalRent.toLocaleString('en-IN', {
+        //            minimumFractionDigits: 2,
+        //            maximumFractionDigits: 2
+        //        }) +
+        //        "</b></td>";
+
+        //    html += "<td></td>";
+        //    html += "<td></td>";
+
+        //    if (statusId == "5" || statusId == "6") {
+        //        html += "<td></td>";
+        //        html += "<td></td>";
+        //    }
+
+        //    html += "</tr>";
+
+
+
+        //    html += "</tbody>";
+
+        //    $("#tblAgreementReport").html(html);
+
+        //}
+        function bindAgreementTable(data) {
+
+            if (!data || data.length == 0) {
+                $("#tblAgreementReport").html("");
+                return;
+            }
+
+            var categoryId = sessionStorage.getItem("AgreementCategoryId");
+            var statusId = sessionStorage.getItem("AgreementStatusId");
+
+            var html = "<thead><tr>";
+
+            if (categoryId == "1") {
+                html += "<th>BRANCH</th>";
+                html += "<th>CUSTOMER_ID</th>";
+            }
+            else if (categoryId == "11") {
+                html += "<th>OFFICE-SPACE</th>";
+                html += "<th>ENTER_DATE</th>";
+            }
+            else {
+                html += "<th>FLAT-NAME</th>";
+
+                if (statusId == "4")
+                    html += "<th>ENTER_DATE</th>";
+                else if (statusId == "6")
+                    html += "<th>AREA</th>";
+                else
+                    html += "<th>ACC_APPROVE_DT</th>";
+            }
+
+            html += "<th>OWNER</th>";
+            html += "<th>SECURITY DEP.</th>";
+            html += "<th>TOT_RENT</th>";
+            html += "<th>PERIOD</th>";
+
+            if (categoryId == "1")
+                html += "<th>SQUARE FEET</th>";
+            else
+                html += "<th>CAPACITY</th>";
+
+            if (statusId == "6") {
+                html += "<th>ADVANCE TAKEN DATE</th>";
+                html += "<th>PENDING DAYS</th>";
+            }
+            else if (statusId == "5") {
+                html += "<th></th>";
+                html += "<th>PENDING DAYS</th>";
+            }
+            else {
+                html += "<th></th>";
+                html += "<th></th>";
+            }
+
+            html += "</tr></thead><tbody>";
+
+            var totalCount = 0;
+            var totalSecurityDeposit = 0;
+            var totalRent = 0;
+
+            $.each(data, function (i, item) {
+
+
+                html += "<tr>";
+
+                       if (categoryId == "1") {
+
+            html += "<td>" + (item.BRANCH_OFFICE_SPACE || "") + "</td>";
+            html += "<td>" + (item.CUSTOMER_ID || "") + "</td>";
+        }
+        else if (categoryId == "11") {
+
+            html += "<td>" + (item.BRANCH_OFFICE_SPACE || "") + "</td>";
+
+            if (
+                item.ENTERED_DATE == null ||
+                item.ENTERED_DATE == "" ||
+                item.ENTERED_DATE == "[object Object]" ||
+                typeof item.ENTERED_DATE === "object"
+            ) {
+                html += "<td>NOT ENTERED</td>";
+            }
+            else {
+                html += "<td>" + item.ENTERED_DATE + "</td>";
+            }
+        }
+        else {
+
+            html += "<td>" + (item.FLAT_NAME || "") + "</td>";
+
+            if (statusId == "4") {
+
+                if (
+                    item.ENTER_DATE == null ||
+                    item.ENTER_DATE == "" ||
+                    item.ENTER_DATE == "[object Object]" ||
+                    typeof item.ENTER_DATE === "object"
+                ) {
+                    html += "<td>NOT ENTERED</td>";
+                }
+                else {
+                    html += "<td>" + item.ENTER_DATE + "</td>";
+                }
+            }
+            else if (statusId == "6") {
+
+                html += "<td>" + (item.AREA || "") + "</td>";
+            }
+            else {
+
+                if (
+                    item.ACC_APPROVE_DT == null ||
+                    item.ACC_APPROVE_DT == "" ||
+                    item.ACC_APPROVE_DT == "[object Object]" ||
+                    typeof item.ACC_APPROVE_DT === "object"
+                ) {
+                    html += "<td>NOT ENTERED</td>";
+                }
+                else {
+                    html += "<td>" + item.ACC_APPROVE_DT + "</td>";
+                }
+            }
+        }
+        
+
+                html += "<td>" + (item.OWNER_NAME || "") + "</td>";
+
+                html += "<td style='text-align:right'>" +
+                    Number(item.SECURITY_DEPOSIT || 0).toLocaleString('en-IN', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) +
+                    "</td>";
+
+                html += "<td style='text-align:right'>" +
+                    Number(item.TOTAL_RENT || 0).toLocaleString('en-IN', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) +
+                    "</td>";
+
+                html += "<td>" + (item.RENT_PERIOD || "") + "</td>";
+
+                if (categoryId == "1")
+                    html += "<td>" + (item.SQFEET_CAPACITY || "") + "</td>";
+                else
+                    html += "<td>" + (item.CAPACITY || item.SQFEET_CAPACITY || "") + "</td>";
+
+                if (statusId == "6") {
+
+                    html += "<td>" + (item.ADVANCE_TAKEN_DATE || "") + "</td>";
+                    html += "<td>" + (item.PENDING_DAYS || "") + "</td>";
+                }
+                else if (statusId == "5") {
+
+                    html += "<td></td>";
+                    html += "<td>" + (item.PENDING_DAYS || "") + "</td>";
+                }
+                else {
+
+                    html += "<td></td>";
+                    html += "<td></td>";
+                }
+
+                totalCount++;
+                totalSecurityDeposit += Number(item.SECURITY_DEPOSIT || 0);
+                totalRent += Number(item.TOTAL_RENT || 0);
+
+                html += "</tr>";
+            });
+
+            html += "<tr style='background:#eef5fb;color:#8B0000;font-weight:bold;'>";
+
+            html += "<td>TOTAL :</td>";
+            html += "<td>" + totalCount + "</td>";
+            html += "<td></td>";
+
+            html += "<td style='text-align:right'>" +
+                totalSecurityDeposit.toLocaleString('en-IN', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) +
+                "</td>";
+
+            html += "<td style='text-align:right'>" +
+                totalRent.toLocaleString('en-IN', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) +
+                "</td>";
+
+            html += "<td></td>";
+            html += "<td></td>";
+
+            if (statusId == "5" || statusId == "6") {
+                html += "<td></td>";
+                html += "<td></td>";
+            }
+
+            html += "</tr>";
+
+            html += "</tbody>";
+
+            $("#tblAgreementReport").html(html);
+        }
+
+        //function ExportToExcel() {
+
+        //    var table = document.getElementById("tblAgreementReport");
+
+        //    var workbook = XLSX.utils.table_to_book(
+        //        table,
+        //        { sheet: "Agreement Report" }
+        //    );
+
+        //    XLSX.writeFile(
+        //        workbook,
+        //        "Agreement_Report.xlsx"
+        //    );
+        //}
+        function ExportToExcel() {
+
+            var wb = XLSX.utils.book_new();
+
+            var branchId = $("#spBranchId").text();
+            var branchName = $("#spBranchName").text();
+            var date = $("#spDate").text();
+            var time = $("#spTime").text();
+            var heading = $("#spReportHeading").text();
+
+            var wsData = [];
+
+            // Report Header
+            wsData.push(["MANAPPURAM FINANCE LIMITED"]);
+            wsData.push([]);
+            wsData.push(["Branch Id", branchId]);
+            wsData.push(["Branch Name", branchName]);
+            wsData.push(["Date", date]);
+            wsData.push(["Time", time]);
+            wsData.push([]);
+            wsData.push([heading]);
+            wsData.push([]);
+
+            // Table Headers
+            var table = document.getElementById("tblAgreementReport");
+
+            $(table).find("thead tr").each(function () {
+                var row = [];
+                $(this).find("th").each(function () {
+                    row.push($(this).text().trim());
+                });
+                wsData.push(row);
+            });
+
+            // Table Data
+            $(table).find("tbody tr").each(function () {
+                var row = [];
+                $(this).find("td").each(function () {
+                    row.push($(this).text().trim());
+                });
+                wsData.push(row);
+            });
+
+            var ws = XLSX.utils.aoa_to_sheet(wsData);
+
+            // Merge Company Name
+            ws["!merges"] = [
+                {
+                    s: { r: 0, c: 0 },
+                    e: { r: 0, c: 8 }
+                },
+                {
+                    s: { r: 7, c: 0 },
+                    e: { r: 7, c: 8 }
+                }
+            ];
+
+            // Auto Width
+            ws["!cols"] = [
+                { wch: 20 }, { wch: 25 }, { wch: 20 }, { wch: 20 },
+                { wch: 15 }, { wch: 15 }, { wch: 20 }, { wch: 15 }, { wch: 15 }
+            ];
+
+            XLSX.utils.book_append_sheet(wb, ws, "Agreement Report");
+
+            XLSX.writeFile(wb, "Agreement_Report.xlsx");
+        }
+
+        function Exit1() {
+
+            window.location.href = "/ModernRentApp/Rent/Index";
+            // window.location.href = "/MebsCustomerApp/Customer/Index";
+        }
+
+    </script>
+
+</body>
+
+</html>
