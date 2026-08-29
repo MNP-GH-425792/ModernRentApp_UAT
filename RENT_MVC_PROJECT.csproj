@@ -13,8 +13,4 @@
     <PackageReference Include="System.Security.Permissions" Version="10.0.11" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Rent\" />
-  </ItemGroup>
-
 </Project>

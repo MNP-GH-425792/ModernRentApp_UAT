@@ -369,6 +369,44 @@ namespace RENT_MVC_PROJECT.Controllers
             return View(model);
 
         }
+        public IActionResult RentProcessedList(string datas)
+        {
+
+            ViewData["baseurl"] = baseurl;
+            ViewData["root"] = rootfolder;
+            ViewData["HeadName"] = datas;
+
+            ViewData["user"] = HttpContext.Session.GetString("ecode");
+            var empcode = HttpContext.Session.GetString("ecode");
+            var empname = HttpContext.Session.GetString("EmpName");
+            var branchname = HttpContext.Session.GetString("BrName");
+            var UserId = HttpContext.Session.GetString("UserId");
+            var brID = HttpContext.Session.GetString("BrID");
+
+            ViewData["BrID"] = brID;
+            MenuListModel model = new MenuListModel();
+            model = (MenuListModel)_Grepo.GetMainMenuData(UserId, baseurl, MainHeadID);
+
+            ViewData["EmpCode"] = UserId;
+            ViewData["EmpName"] = empname;
+            return View(model);
+
+        }
+        [HttpPost]
+        public IActionResult LoadReportPage(string month, string year)
+        {
+
+            string indataString = "PROC_RENTPROCESS_REPORT^VIEW_LIST^" + month + "^" + year + "^1";
+
+            string rawJsonResult = getAPIDataRent(indataString);
+            var reportDataList = Newtonsoft.Json.JsonConvert.DeserializeObject<System.Collections.Generic.List<System.Collections.Generic.Dictionary<string, string>>>(rawJsonResult);
+            ViewBag.SelectedMonth = month;
+            ViewBag.SelectedYear = year;
+            ViewBag.BranchID = HttpContext.Session.GetString("BrID") ?? "0";
+            ViewBag.BranchName = HttpContext.Session.GetString("BrName") ?? "A.O.VALAPAD";
+
+            return View("RentProcessedReport", reportDataList);
+        }
     }
 
 }
