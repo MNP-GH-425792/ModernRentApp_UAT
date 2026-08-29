@@ -16,5 +16,4 @@
   <ItemGroup>
     <Folder Include="Views\Rent\" />
   </ItemGroup>
-
 </Project>

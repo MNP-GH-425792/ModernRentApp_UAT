@@ -1,0 +1,124 @@
+﻿@model List<Dictionary<string, string>>
+@{
+    Layout = null;
+    double totalRent = 0; double totalWater = 0; double totalMaint = 0; double totalTds = 0;
+    var monthsList = new List<string> { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rent Processed Report</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fff; padding: 20px; margin: 0; }
+        .btn-export { background-color: #28a745; color: white; border: none; padding: 8px 15px; font-weight: bold; cursor: pointer; border-radius: 4px; }
+        .report-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 15px; }
+        .report-table th { background-color: #f2f2f2; border-bottom: 2px solid #ccc; padding: 10px; text-align: left; font-weight: bold; }
+        .report-table td { padding: 8px; border-bottom: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: center; margin-bottom: 5px; font-weight: bold;">
+        <div style="font-size: 16px; letter-spacing: 1px;">MANAPPURAM FINANCE LIMITED</div>
+        <div style="font-size: 13px; font-weight: normal; margin-top: 3px;">Branch id: @ViewBag.BranchID , Branch Name: @ViewBag.BranchName</div>
+        
+        <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: normal; margin-top: 15px; align-items: center;">
+            <div>Date: <span>@DateTime.Now.ToString("dd-MMM-yyyy")</span></div>
+            <button class="btn-export" onclick="exportToExcel()">EXPORT TO EXCEL</button>
+            <div>Time: <span>@DateTime.Now.ToString("hh:mm:ss tt")</span></div>
+        </div>
+    </div>
+
+    <div style="background-color: #cccccc; color: #000; text-align: center; font-weight: bold; padding: 6px 0; font-size: 13px; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase;">
+        RENT PROCESSED LIST ON @ViewBag.SelectedMonth @ViewBag.SelectedYear
+    </div>
+
+    <table class="report-table" id="tblRentReport">
+        <thead>
+            <tr>
+                <th>FIRM</th>
+                <th>BR_ID</th>
+                <th>BRANCH</th>
+                <th>CATEGORY</th>
+                <th>OWNER</th>
+                <th>RENT_MONTH</th>
+                <th>RENT</th>
+                <th>WATER</th>
+                <th>MAINTENANCE</th>
+                <th>TDS</th>
+                <th>PROCESSED_DT</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    double rent = 0; double.TryParse(item.ContainsKey("RENT") ? item["RENT"] : "0", out rent);
+                    double water = 0; double.TryParse(item.ContainsKey("WATER") ? item["WATER"] : "0", out water);
+                    double maint = 0; double.TryParse(item.ContainsKey("MAINTENANCE") ? item["MAINTENANCE"] : "0", out maint);
+                    double tds = 0; double.TryParse(item.ContainsKey("TDS") ? item["TDS"] : "0", out tds);
+
+                    totalRent += rent; totalWater += water; totalMaint += maint; totalTds += tds;
+
+                    string cleanDate = item.ContainsKey("TO_DATE(B.PROCESS_DT)") ? item["TO_DATE(B.PROCESS_DT)"] : "";
+                    if (!string.IsNullOrEmpty(cleanDate) && cleanDate.Contains("T"))
+                    {
+                        var rawDateString = cleanDate.Split('T')[0];
+                        var dateParts = rawDateString.Split('-');
+                        if (dateParts.Length == 3)
+                        {
+                            int mIdx = int.Parse(dateParts[1]) - 1;
+                            if (mIdx >= 0 && mIdx < 12) { cleanDate = $"{dateParts[2]}-{monthsList[mIdx]}-{dateParts[0]}"; }
+                        }
+                    }
+
+                    <tr>
+                        <td>@(item.ContainsKey("FIRM_ABBR") ? item["FIRM_ABBR"] : "")</td>
+                        <td>@(item.ContainsKey("BRANCH_ID") ? item["BRANCH_ID"] : "")</td>
+                        <td>@(item.ContainsKey("SUBSTR(C.BRANCH_NAME,1,17)") ? item["SUBSTR(C.BRANCH_NAME,1,17)"] : "")</td>
+                        <td>@(item.ContainsKey("SUBSTR(D.RENT_CATEGORY_NAME,1,6)") ? item["SUBSTR(D.RENT_CATEGORY_NAME,1,6)"] : "")</td>
+                        <td>@(item.ContainsKey("OWNER") ? item["OWNER"] : "")</td>
+                        <td>@(item.ContainsKey("RENT_MONTH") ? item["RENT_MONTH"] : "")</td>
+                        <td>@rent.ToString("F2")</td>
+                        <td>@water.ToString("F2")</td>
+                        <td>@maint.ToString("F2")</td>
+                        <td>@tds.ToString("F2")</td>
+                        <td>@cleanDate</td>
+                    </tr>
+                }
+                <tr style="background-color: #e6f2ff; font-weight: bold; border-top: 2px solid #999;">
+                    <td colspan="6" style="text-align: right; padding: 10px;">TOTAL:</td>
+                    <td>@totalRent.ToString("F2")</td>
+                    <td>@totalWater.ToString("F2")</td>
+                    <td>@totalMaint.ToString("F2")</td>
+                    <td>@totalTds.ToString("F2")</td>
+                    <td></td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="11" style="text-align: center; padding: 20px; color: red;">No data logs available for selected criteria period.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <script type="text/javascript">
+        function exportToExcel() {
+            var htmlContent = document.documentElement.outerHTML;
+            var dataType = 'application/vnd.ms-excel';
+            var fileName = 'Rent_Processed_Report_@ViewBag.SelectedMonth' + '_@ViewBag.SelectedYear' + '.xls';
+            
+            var downloadLink = document.createElement("a");
+            document.body.appendChild(downloadLink);
+            downloadLink.href = 'data:' + dataType + ', ' + encodeURIComponent(htmlContent);
+            downloadLink.download = fileName;
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
+</body>
+</html>

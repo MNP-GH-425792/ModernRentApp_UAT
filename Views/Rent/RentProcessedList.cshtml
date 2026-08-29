@@ -1,0 +1,188 @@
+﻿@{
+    ViewData["Title"] = "RentProcessedList";
+}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="~/css/index.css">
+       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+        body {
+            background-color: #f7edd4;
+            font-family: "Courier New", Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header-container {
+            text-align: center;
+            border-bottom: 2px solid #dfd1b3;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .page-title {
+            color: #1e3d73;
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .filter-table {
+            width: 80%;
+            max-width: 700px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #f7edd4;
+            border: 2px inset #ffffff; 
+        }
+        
+        .filter-table td {
+            border: 1px solid #bfb295; 
+            padding: 6px 12px;
+            height: 32px;
+            vertical-align: middle;
+        }
+
+        .label-column {
+            width: 40%;
+            text-align: center;
+            font-size: 16px;
+            color: #000;
+        }
+
+        .input-column {
+            width: 60%;
+            text-align: left;
+        }
+
+        .filter-select {
+            width: 75%;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            padding: 2px;
+            border: 1px solid #7a7a7a;
+            background-color: #fff;
+        }
+
+        .action-row {
+            text-align: center;
+        }
+        
+        .action-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 4px 0;
+        }
+
+        .btn-action {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 14px;
+            font-weight: bold;
+            color: #000;
+            background: linear-gradient(to bottom, #ffffff 0%, #e0e0e0 100%);
+            border: 1px solid #7a7a7a;
+            box-shadow: inset 1px 1px 0px #fff;
+            padding: 4px 20px;
+            cursor: pointer;
+            min-width: 90px;
+        }
+
+        .btn-action:active {
+            background: #d5d5d5;
+            box-shadow: inset 1px 1px 2px #7a7a7a;
+        }
+        .pagecontiner{
+            width: 500%; !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="pagecontiner">
+        <div class="header-container">
+            <h1 class="page-title">RENT PROCESSED LIST</h1>
+        </div>
+
+<form action="@Url.Action("LoadReportPage", "Rent")" method="POST">
+<table class="filter-table" id="main">
+                <tr>
+                    <td class="label-column">Month</td>
+                    <td class="input-column">
+                        <select id="cmb_month" name="month" class="filter-select">
+                            <option selected value="Jan">January</option>
+                            <option value="Feb">February</option>
+                            <option value="Mar">March</option>
+                            <option value="Apr">April</option>
+                            <option value="May">May</option>
+                            <option value="Jun">June</option>
+                            <option value="Jul">July</option>
+                            <option value="Aug">August</option>
+                            <option value="Sep">September</option>
+                            <option value="Oct">October</option>
+                            <option value="Nov">November</option>
+                            <option value="Dec">December</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label-column">Year</td>
+                    <td class="input-column">
+                        <select id="cmb_year" name="year" class="filter-select"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="action-row">
+                        <div class="action-container">
+                            <button id="btn_confirm" type="submit" class="btn-action">
+                                VIEW
+                            </button>
+                            <button id="btn_exit" type="button" class="btn-action" onclick="btn_exit_onclick()">
+                                EXIT
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script type="text/javascript">
+        function btn_exit_onclick() {
+            window.open('/Home', '_self');
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            var yearSelect = document.getElementById("cmb_year");
+            var currentYear = new Date().getFullYear();
+            for (var i = 0; i <= 3; i++) {
+                var yearOption = currentYear - i;
+                var optionElement = document.createElement("option");
+                optionElement.value = yearOption;
+                optionElement.text = yearOption;
+                yearSelect.appendChild(optionElement);
+            }
+        });
+        function validateFilters() {
+            var selectedYear = document.getElementById("cmb_year").value;
+            if(!selectedYear) {
+                alert("Please select a Year.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+}
+
